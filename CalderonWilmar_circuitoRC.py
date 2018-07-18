@@ -33,28 +33,51 @@ def mhm():
 		lprima=like(q2,q)
 		al=(lprima/lprimero)
 		if(al>=1.0):
-			rin=rnew
-			cin=cnew
-			l[i]+=lprima
+			r[i]=rnew
+			c[i]=cnew
+			l[i]=lprima
 		else:
 			bet=np.random.random()
 			if(al>bet):
-				rin=rnew
-				cin=cnew
-				l[i]+=lprima
+				r[i]=rnew
+				c[i]=cnew
+				l[i]=lprima
 			else:
-				rin=rguess
-				l[i]+=lprimero
-				cin=cguess
-		r[i]=rin
-		c[i]=cin
+				r[i]=rguess
+				l[i]=lprimero
+				c[i]=cguess
 mhm()		
 indice=np.argmax(l)
 rbest=r[indice]
 cbest=c[indice]
-print (indice,rbest,cbest)
+qmax=Vo*cbest
+cd1="Mejor R: "+str(round(rbest,5))
+cd2="Mejor C: "+str(round(cbest,5))
+cd3="Qmax: "+ str(round(qmax,5))
+print (rbest,cbest,qmax)
+
 plt.figure()
 plt.scatter(t,q,s=2)
-plt.plot(t,carga(t,rbest,cbest))
+plt.plot(t,carga(t,rbest,cbest),c="g")
+plt.text(200,50,cd1)
+plt.text(200,40,cd2)
+plt.text(200,30,cd3)
+plt.ylabel("$q(t)$")
+plt.xlabel("$t$")
+plt.tight_layout() 
 plt.savefig("CargaRC.pdf")
 #plt.show()
+
+plt.figure()
+plt.subplot(211)
+plt.scatter(r,-np.log(l),s=1)
+plt.xlabel("r")
+plt.ylabel("$-ln(l)$")
+plt.subplot(212)
+plt.scatter(c,-np.log(l),s=1)
+plt.xlabel("r")
+plt.ylabel("$-ln(l)$")
+plt.tight_layout()
+plt.savefig("OPCIONAL.pdf")
+plt.show()
+
